@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(private newsService: NewsService) {}
+
+  ngOnInit(): void {
+    this.newsService.getHeadLines().subscribe(resp => {
+        console.log('Resp ', resp);
+    });
+  }
 
 }
