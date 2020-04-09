@@ -8,11 +8,15 @@ import { NewsService } from '../../services/news.service';
 })
 export class Tab1Page {
 
+  articles: Article[] = [];
+
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
     this.newsService.getHeadLines().subscribe( resp => {
         console.log('Resp ', resp);
+        // Spread operator, Extract and Insert each one independently, in articles
+        this.articles.push( ...resp.articles );
     });
   }
 
