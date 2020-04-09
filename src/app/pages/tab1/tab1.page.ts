@@ -11,7 +11,7 @@ export class Tab1Page {
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
-    this.newsService.getHeadLines().subscribe(resp => {
+    this.newsService.getHeadLines().subscribe( resp => {
         console.log('Resp ', resp);
     });
   }
