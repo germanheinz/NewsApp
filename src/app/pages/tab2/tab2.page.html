@@ -4,7 +4,7 @@
             Breaking News
         </ion-title>
     </ion-toolbar>
-    <ion-segment mode="md" color="primary" scrollable>
+    <ion-segment mode="md" color="primary" scrollable (ionChange)="changeCategory($event)">
         <ion-segment-button mode="md" [value]='category' *ngFor="let category of categories">
             <ion-label text-capitalize class="ion-text-capitalize">{{category}}</ion-label>
         </ion-segment-button>
@@ -12,11 +12,5 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Tab 2</ion-title>
-        </ion-toolbar>
-    </ion-header>
-
-    <app-explore-container name="Tab 2 page"></app-explore-container>
+    <app-news [articles]="news"></app-news>
 </ion-content>

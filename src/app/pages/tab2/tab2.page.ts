@@ -23,13 +23,26 @@ export class Tab2Page implements OnInit{
     'sports',
     'technology',
   ];
+
+  news: Article [] = [];
+
   constructor(private newService: NewsService) {}
-  
+
   ngOnInit(): void {
     this.segment.value = this.categories[0];
-    this.newService.getTopHeadLinesCategories( this.categories[0])
+    this.loadNews(this.categories[0]);
+  }
+  //When tha segment value changed, function will be called
+  changeCategory(event) {
+    this.news = [];
+    this.loadNews(event.detail.value);
+  }
+  
+  loadNews(category: string) {
+    this.newService.getTopHeadLinesCategories( category )
     .subscribe(resp => {
       console.log(resp);
+      this.news.push(...resp.articles);
     });
   }
 
