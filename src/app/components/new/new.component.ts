@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NewComponent implements OnInit {
   @Input() article: Article;
-  @Input() index: Number;
+  @Input() index: number;
   constructor() { }
 
   ngOnInit() {}
