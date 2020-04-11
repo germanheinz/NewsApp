@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { IonSegment } from '@ionic/angular';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-tab2',
@@ -22,10 +23,15 @@ export class Tab2Page implements OnInit{
     'sports',
     'technology',
   ];
+  constructor(private newService: NewsService) {}
+  
   ngOnInit(): void {
     this.segment.value = this.categories[0];
+    this.newService.getTopHeadLinesCategories( this.categories[0])
+    .subscribe(resp => {
+      console.log(resp);
+    });
   }
 
-  constructor() {}
 
 }
