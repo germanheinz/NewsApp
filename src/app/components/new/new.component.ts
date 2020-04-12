@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-new',
@@ -8,8 +9,13 @@ import { Component, OnInit, Input } from '@angular/core';
 export class NewComponent implements OnInit {
   @Input() article: Article;
   @Input() index: number;
-  constructor() { }
+  constructor(private iab: InAppBrowser) { }
 
   ngOnInit() {}
+  
+  openNew(){
+    console.log('News', this.article.url);
+    const browser = this.iab.create(this.article.url, '_system');
+  }
 
 }
