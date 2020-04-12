@@ -3,6 +3,13 @@
         <ion-card-subtitle>
             <span class="text-primary">{{index + 1}}. </span>
             <span class="article-source-name"> {{article.source.name}}</span>
+
+            <div class="more_news">
+                <ion-button fill="clear" (click)="openMenu()">
+                    <ion-icon slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
+                </ion-button>
+            </div>
+
         </ion-card-subtitle>
         <ion-card-title (click)="openNew()">{{article.title}}</ion-card-title>
     </ion-card-header>
