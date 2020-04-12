@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 
 @Component({
   selector: 'app-new',
@@ -10,7 +12,7 @@ import { ActionSheetController } from '@ionic/angular';
 export class NewComponent implements OnInit {
   @Input() article: Article;
   @Input() index: number;
-  constructor(private iab: InAppBrowser, public actionSheetController: ActionSheetController) { }
+  constructor(private iab: InAppBrowser, private actionSheetController: ActionSheetController, private socialSharing: SocialSharing) { }
 
   ngOnInit() {}
   
@@ -27,6 +29,12 @@ export class NewComponent implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Share clicked');
+          this.socialSharing.share(
+            this.article.title,
+            this.article.source.name,
+            '',
+            this.article.url
+          );
         }
       }, {
         text: 'Favorite',
