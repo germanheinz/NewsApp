@@ -54,7 +54,6 @@ export class NewComponent implements OnInit {
 
 
     const actionSheet = await this.actionSheetController.create({
-      header: 'Albums',
       buttons: [ {
         text: 'Share',
         icon: 'share',
