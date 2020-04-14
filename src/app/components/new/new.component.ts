@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { DataLocalService } from '../../services/data-local.service';
 
 
 @Component({
@@ -12,10 +13,13 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 export class NewComponent implements OnInit {
   @Input() article: Article;
   @Input() index: number;
-  constructor(private iab: InAppBrowser, private actionSheetController: ActionSheetController, private socialSharing: SocialSharing) { }
+  constructor(private iab: InAppBrowser,
+              private actionSheetController: ActionSheetController,
+              private socialSharing: SocialSharing,
+              private dataLocal: DataLocalService) { }
 
   ngOnInit() {}
-  
+
   openNew() {
     console.log('News', this.article.url);
     const browser = this.iab.create(this.article.url, '_system');
@@ -42,6 +46,7 @@ export class NewComponent implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Favorite clicked');
+          this.dataLocal.saveNews(this.article);
         }
       }, {
         text: 'Cancel',
