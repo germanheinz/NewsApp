@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataLocalService {
+export class DataLocalService implements OnInit {
 
   news: Article [] = [];
 
   constructor(private storage: Storage) { }
+
+  ngOnInit(): void {
+    this.loadFavourites();
+  }
 
   saveNews(newFavourite: Article) {
     // tslint:disable-next-line: no-unused-expression
@@ -20,8 +24,12 @@ export class DataLocalService {
 
     }
   }
-  loadFavourites(){
-
+  // I need the favourites news loaded before begins the rest, that's why async
+  async loadFavourites() {
+    const favourites = await this.storage.get('favourites');
+    if (favourites) {
+      this.news = favourites;
+    }
   }
 
 }
