@@ -31,5 +31,10 @@ export class DataLocalService implements OnInit {
       this.news = favourites;
     }
   }
+  deleteNew(newToDelete: Article) {
+  this.news = this.news.filter(resp => resp.title !== newToDelete.title);
+  this.storage.set('favourites', this.news);
+
+  }
 
 }

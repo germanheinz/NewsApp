@@ -13,6 +13,8 @@ import { DataLocalService } from '../../services/data-local.service';
 export class NewComponent implements OnInit {
   @Input() article: Article;
   @Input() index: number;
+  @Input() inFavourites;
+
   constructor(private iab: InAppBrowser,
               private actionSheetController: ActionSheetController,
               private socialSharing: SocialSharing,
@@ -25,6 +27,32 @@ export class NewComponent implements OnInit {
     const browser = this.iab.create(this.article.url, '_system');
   }
   async openMenu() {
+
+    let deleteButton;
+    if (this.inFavourites) {
+        deleteButton = {
+        text: 'Trash',
+        icon: 'trash',
+        cssClass: 'action-dark',
+        handler: () => {
+          console.log('Trash clicked');
+          this.dataLocal.deleteNew(this.article);
+        }
+      };
+    } else {
+      deleteButton = {
+        text: 'Favorite',
+        icon: 'heart',
+        cssClass: 'action-dark',
+        handler: () => {
+          console.log('Favorite clicked');
+          this.dataLocal.saveNews(this.article);
+        }
+      };
+    }
+
+
+
     const actionSheet = await this.actionSheetController.create({
       header: 'Albums',
       buttons: [ {
@@ -40,15 +68,9 @@ export class NewComponent implements OnInit {
             this.article.url
           );
         }
-      }, {
-        text: 'Favorite',
-        icon: 'heart',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Favorite clicked');
-          this.dataLocal.saveNews(this.article);
-        }
-      }, {
+      },
+      deleteButton,
+      {
         text: 'Cancel',
         icon: 'close',
         cssClass: 'action-dark',
