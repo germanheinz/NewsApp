@@ -9,11 +9,9 @@ export class DataLocalService implements OnInit {
 
   news: Article [] = [];
 
-  constructor(private storage: Storage, private toastController: ToastController) { }
+  constructor(private storage: Storage, private toastController: ToastController) {this.loadFavourites();}
 
-  ngOnInit(): void {
-    this.loadFavourites();
-  }
+  ngOnInit(): void {}
 
   saveNews(newFavourite: Article) {
     const exist = this.news.find(newFound => newFound.title === newFavourite.title);

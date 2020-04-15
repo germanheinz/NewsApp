@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DataLocalService } from '../../services/data-local.service';
 
@@ -18,7 +18,8 @@ export class NewComponent implements OnInit {
   constructor(private iab: InAppBrowser,
               private actionSheetController: ActionSheetController,
               private socialSharing: SocialSharing,
-              private dataLocal: DataLocalService) { }
+              private dataLocal: DataLocalService,
+              private platform: Platform) { }
 
   ngOnInit() {}
 
@@ -60,12 +61,7 @@ export class NewComponent implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Share clicked');
-          this.socialSharing.share(
-            this.article.title,
-            this.article.source.name,
-            '',
-            this.article.url
-          );
+          
         }
       },
       deleteButton,
@@ -80,6 +76,26 @@ export class NewComponent implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+  shareNews() {
+    if (this.platform.is('cordova')) {
+      this.socialSharing.share(
+        this.article.title,
+        this.article.source.name,
+        '',
+        this.article.url
+      );
+      } else {
+        if (navigator['share']) {
+          navigator['share']({
+            title: this.article.title,
+            text: this.article.description,
+            url: this.article.url,
+          })
+          .then(() => console.log('Share it'))
+          .catch((error) => console.log('errpr'));
+        }
+    }
   }
 
 }
