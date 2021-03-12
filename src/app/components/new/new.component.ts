@@ -28,7 +28,6 @@ export class NewComponent implements OnInit {
     const browser = this.iab.create(this.article.url, '_system');
   }
   async openMenu() {
-
     let deleteButton;
     if (this.inFavourites) {
         deleteButton = {
@@ -51,9 +50,6 @@ export class NewComponent implements OnInit {
         }
       };
     }
-
-
-
     const actionSheet = await this.actionSheetController.create({
       buttons: [ {
         text: 'Share',
@@ -61,7 +57,7 @@ export class NewComponent implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Share clicked');
-          
+          this.shareNews();
         }
       },
       deleteButton,
@@ -93,7 +89,7 @@ export class NewComponent implements OnInit {
             url: this.article.url,
           })
           .then(() => console.log('Share it'))
-          .catch((error) => console.log('errpr'));
+          .catch((error) => console.log('error'));
         }
     }
   }
